@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Sistema de Seguimiento de comisiones</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href='{% static "web/css/bootstrap.min.css" %}'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href='{% static "web/css/main.css" %}'>
+	{% block extraHead %}{% endblock extraHead %}
+</head>
+<body>
+	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+		<a class="navbar-brand mr-0 mr-md-2" href="{% url 'index' %}">Sistema de comisiones</a>
+	{% if user.is_authenticated %}
+		<div class="navbar-nav-scroll">
+			<ul class="navbar-nav bd-navbar-nav flex-row">
+					<li class="nav-item {% block activeDato %}{% endblock activeDato %}">
+						<a class="nav-link " href="{% url 'datos' %}">Nuevo dato</a>
+					</li>
+					<li class="nav-item {% block activeSeguimiento %}{% endblock activeSeguimiento %}">
+						<a class="nav-link" href="{% url 'seguimiento' %}">Seguimiento</a>
+					</li>
+				<li class="nav-item d-sm-none">
+					<a class="nav-link" href="{% url 'logout' %}">Salir</a>
+				</li>
+			</ul>
+		</div>
+		<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+			<li class="nav-item dropdown">
+				<a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="userDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user}}</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDrop">
+					<a class="dropdown-item" href="{% url 'logout' %}">Salir</a>
+				</div>
+			</li>
+		</ul>
+	{% endif %}
+	</header>
+	
+	{% block content %}{% endblock content %}
+
+	<script src='{% static "web/js/jquery-3.2.1.min.js" %}'></script>
+	<script src='{% static "web/js/popper.min.js" %}'></script>
+	<script src='{% static "web/js/bootstrap.min.js" %}'></script>
+
+	{% block extraScripts %}{% endblock extraScripts %}
+</body>
+</html>
