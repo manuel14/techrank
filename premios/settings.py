@@ -26,8 +26,8 @@ SECRET_KEY = '(jp6ng5bu&!@y@08we+c0uyxqr7vz7b3n3io=r==z8^zsalb&9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ADMINS = [('Admin', 'manuel.zubieta@ushuaiavision.com.ar'),
+          ('Admin', 'sistemas@ushuaiavision.com.ar')]
 
 # Application definition
 
@@ -76,12 +76,6 @@ WSGI_APPLICATION = 'premios.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 
 # Password validation
@@ -116,6 +110,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+# # Configuracion del email ushvision
+
+# EMAIL_HOST = 'mail01.aguasdecorrientes.com'
+
+# EMAIL_PORT = 25
+
+# EMAIL_HOST_USER = 'info@agua.com'
+
+# DEFAULT_FROM_EMAIL = 'info@aguasdecorrientes.com'
+
+# SERVER_EMAIL = 'info@aguasdecorrientes.com'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -126,74 +132,23 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'root': {
-#         'level': 'WARNING',
-#         'handlers': ['sentry'],
-#     },
-#     'formatters': {
-#         'verbose': {
-#             'format': '[%(asctime)s] %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
-#             'datefmt': '%d/%b/%Y %H:%M:%S'
-#         },
-#         'simple': {
-#             'format': '[%(asctime)s] %(levelname)s %(message)s',
-#             'datefmt': '%d/%b/%Y %H:%M:%S'
-#         },
-#     },
-#     'handlers': {
-#         'sentry': {
-#             'level': 'ERROR',
-#             'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-#             'tags': {'custom-tag': 'x'},
-#         },
-#         'console': {
-#             'level': 'INFO',
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'simple'
-#         },
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.handlers.TimedRotatingFileHandler',
-#             'formatter': 'verbose',
-#             'filename': 'tmp/log/smc.log',
-#             'when': 'D',
-#             'backupCount': 30
-#         },
-#     },
-#     'loggers': {
-#         'api.views': {
-#             'handlers': ['console', 'file'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#         'api.models': {
-#             'handlers': ['console', 'file'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#         'web.views': {
-#             'handlers': ['console', 'file'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#         'django.db.backends': {
-#             'level': 'ERROR',
-#             'handlers': ['console'],
-#             'propagate': False,
-#         },
-#         'raven': {
-#             'level': 'DEBUG',
-#             'handlers': ['console'],
-#             'propagate': False,
-#         },
-#         'sentry.errors': {
-#             'level': 'DEBUG',
-#             'handlers': ['sentry'],
-#             'propagate': False,
-#         }
-#     }
-# }
+if DEBUG:   
+    ALLOWED_HOSTS = ['*']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    ALLOWED_HOSTS = ['localhost', '192.168.50.164']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'techrank',
+            'USER': 'mzubieta',
+            'PASSWORD': 'pucheto22',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
