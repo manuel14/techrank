@@ -14,6 +14,7 @@ def index(request):
 @login_required(login_url='/web/login/')
 def seguimiento(request):
     clientes = Cliente.objects.all()
+    print(clientes)
     return render(request, 'web/seguimiento.html', {'clientes': clientes})
 
 
@@ -37,16 +38,12 @@ def dato(request):
     direccion = request.POST.get("direccion", None)
     id_tec = request.POST.get("id", None)
     compartido = request.POST.get("compartido", None)
-    try:
-        tec = Tecnico(tecnico_id=id_tec, user=request.user)
-        tec.save()
-        cliente = Cliente(
-            nombre=nombre, email=email,
-            telefono=telefono, tecnico=tec,
-            nodo=nodo, compartido=compartido
-            )
-        cliente.save()
-        return render(request, 'web/seguimiento.html', {'success': True})
-    except IntegrityError:
-        print("entro por el error")
-        return  render(request, 'web/seguimiento.html', {'success':False})
+    tec, created = Tecnico.objects.get_or_create(tecnico_id=id_tec, user=request.user)
+    cliente = Cliente(
+        nombre=nombre, email=email, direccion= direccion,
+        telefono=telefono, tecnico=tec,
+        nodo=nodo, compartido=compartido
+        )
+    cliente.save()
+    return render(request, 'web/seguimiento.html', {'success': True})
+

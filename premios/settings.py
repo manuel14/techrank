@@ -132,6 +132,10 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+LOGOUT_REDIRECT_URL = '/web/login/'
+
+LOGIN_REDIRECT_URL = '/web/'
+
 if DEBUG:   
     ALLOWED_HOSTS = ['*']
     DATABASES = {
