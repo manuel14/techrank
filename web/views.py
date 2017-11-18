@@ -14,13 +14,7 @@ def index(request):
 @login_required(login_url='/web/login/')
 def seguimiento(request):
     clientes = Cliente.objects.all()
-    print(clientes)
     return render(request, 'web/seguimiento.html', {'clientes': clientes})
-
-
-@login_required(login_url='/web/login/')
-def datos(request):
-    pass
 
 
 @login_required(login_url='/web/login/')
@@ -45,5 +39,5 @@ def dato(request):
         nodo=nodo, compartido=compartido
         )
     cliente.save()
-    return render(request, 'web/seguimiento.html', {'success': True})
+    return redirect('/web/seguimiento')
 
