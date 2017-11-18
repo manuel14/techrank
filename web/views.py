@@ -36,8 +36,8 @@ def dato(request):
     telefono = request.POST.get("telefono", None)
     nodo = request.POST.get("nodo", None)
     direccion = request.POST.get("direccion", None)
-    id_tec = request.POST.get("id", None)
     compartido = request.POST.get("compartido", None)
+    id_tec = request.user.username
     tec, created = Tecnico.objects.get_or_create(tecnico_id=id_tec, user=request.user)
     cliente = Cliente(
         nombre=nombre, email=email, direccion= direccion,

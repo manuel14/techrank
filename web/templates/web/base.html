@@ -11,8 +11,10 @@
 	{% block extraHead %}{% endblock extraHead %}
 </head>
 <body>
-	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-		<a class="navbar-brand mr-0 mr-md-2" href="{% url 'index' %}">Sistema de comisiones</a>
+	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">	
+		<a class="navbar-brand" href="{% url 'index' %}">
+			<img class="mr-2" style="width:15%;height:50%;" src="{% static 'web/img/logo.png' %}" alt="logo">
+			<h4>Comisiones por ventas</h4></a>
 	{% if user.is_authenticated %}
 		<div class="navbar-nav-scroll">
 			<ul class="navbar-nav bd-navbar-nav flex-row">
