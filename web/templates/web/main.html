@@ -3,19 +3,19 @@
 {% block content %}
 <div class="container-fluid">
     <main class="mt-3">
-        <form action="{% url 'dato' %}">
+        <form method="post" action="{% url 'dato' %}">
             {% csrf_token %}
             <div class="form-group col-md-6 col-sm-12 mx-auto">
             <label for="nombre">Nombre</label>
-            <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+            <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" required>
           </div>
           <div class="form-group col-md-6 col-sm-12 mx-auto">
             <label for="direccion">Direccion</label>
-            <input name="direccion" type="text" class="form-control" id="direccion" placeholder="Direccion">
+            <input name="direccion" type="text" class="form-control"  id="direccion" placeholder="Direccion" required>
           </div>
           <div class="form-group col-md-6 col-sm-12 mx-auto">
             <label for="telefono">Teléfono</label>
-            <input name="telefono" type="text" class="form-control" id="telefono" placeholder="Teléfono">
+            <input name="telefono" type="text" class="form-control" id="telefono" placeholder="Teléfono" required>
           </div>
           <div class="form-group col-md-6 col-sm-12 mx-auto">
             <label for="nodo">Nodo</label>
@@ -24,6 +24,10 @@
           <div class="form-group col-md-6 col-sm-12 mx-auto">
             <label for="correo">Correo</label>
             <input name="correo" type="email" class="form-control" id="email" placeholder="Correo">
+          </div>
+          <div class="form-group col-md-6 col-sm-12 mx-auto">
+            <label for="id">Id</label>  
+            <input name="id" type="text" class="form-control" id="id" placeholder="Id" required>
           </div>
           <div class="form-group col-md-6 col-sm-12 mx-auto">
             <label for="compartido">¿Dato Compartido?</label>
