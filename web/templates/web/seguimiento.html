@@ -17,6 +17,9 @@
                           <th data-field="correo">Correo</th>
                           <th data-field="tecnico">Tecnico</th>
                           <th data-field="compartido">Id de técnico compartido</th>
+                          {% if user.groups.all.0.name == "comercial" %}
+                              <th data-field="estado">Estado</th>
+                          {% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -29,10 +32,35 @@
                                 <td>{{cliente.email}}</td>
                                 <td>{{cliente.tecnico.tecnico_id}}</td>
                                 <td>{{cliente.compartido}}</td>
+                                {% if user.groups.all.0.name == "comercial" %}
+                                    <td>
+                                        <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input checked class="form-check-input" type="radio" name="no" id="no" value="" checked>
+                                            No contactado
+                                          </label>
+                                        </div>
+                                        <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="contactado" id="contactado" value="">
+                                            Contactado
+                                          </label>
+                                        </div>
+                                        <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="venta" id="venta" value="">
+                                            Venta
+                                          </label>
+                                        </div>
+                                    </td>
+                                {% endif %}
                             </tr>   
                         {% endfor %}
                     </tbody>
                 </table>
+                <div class="form-group col-md-6 col-sm-12 mx-auto">
+                    <button type="submit" class="btn btn-primary mx-auto">Guardar</button>
+                </div>
         </main>
 </div>
 	

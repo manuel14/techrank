@@ -13,7 +13,16 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=150)
     email = models.EmailField(max_length=150, blank=True, null=True)
     tecnico = models.ForeignKey(Tecnico, related_name="clientes")
-    compartido = models.IntegerField(blank=True, null=True)
+    compartido = models.CharField(blank=True, null=True, max_length=150)
+    NO = "NO"
+    CONTACTADO = "CT"
+    VENTA = "VE"
+    estado_choices = (
+        (NO, 'No contactado'),
+        (CONTACTADO, 'contactado'),
+        (VENTA, 'venta confirmada'),
+    )
+    estado = models.CharField(max_length=20, choices = estado_choices)
 
     def __str__(self):
         return self.nombre
