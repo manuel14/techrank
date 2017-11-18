@@ -197,7 +197,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'formatter': 'verbose',
-            'filename': 'tmp/log/.log',
+            'filename': 'tmp/log/techrank.log',
             'when': 'D',
             'backupCount': 30
         },
