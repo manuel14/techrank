@@ -4,11 +4,11 @@
 	 <main class="mt-3">
             <div class="row">
                 <div class="col col-sm-9">
-                    <h1>Listado de posibles Clientes</h1>
+                    <h1>Potenciales clientes</h1>
                 </div>
             </div>
-                <table class="table table-hover">
-                    <thead class="thead-inverse">
+                <table class="table table-responsive table-hover">
+                    <thead class="thead-dark">
                         <tr>
                           <th data-field="nombre">Nombre</th> 
                           <th data-field="direccion">Dirección</th>
@@ -17,6 +17,7 @@
                           <th data-field="correo">Correo</th>
                           <th data-field="tecnico">Tecnico</th>
                           <th data-field="compartido">Id de técnico compartido</th>
+                          <th data-field="estado">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,14 +30,30 @@
                                 <td>{{cliente.email}}</td>
                                 <td>{{cliente.tecnico.tecnico_id}}</td>
                                 <td>{{cliente.compartido}}</td>
+                                <td>
+                                    <div class="form-check form-check-inline">
+                                      <label class="form-check-label">
+                                        <input disabled class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> No contactado
+                                      </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <label class="form-check-label">
+                                        <input disabled class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> Contactado
+                                      </label>
+                                    </div>
+                                    <div class="form-check form-check-inline disabled">
+                                      <label class="form-check-label">
+                                        <input id="vendido" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled> Vendido
+                                      </label>
+                                    </div>
+                                </td>
                             </tr>   
                         {% endfor %}
                     </tbody>
                 </table>
-                <div class="form-group col-md-6 col-sm-12 mx-auto">
+                <div style="display:None;" class="form-group col-md-6 col-sm-12 mx-auto">
                     <button type="submit" class="btn btn-primary mx-auto">Guardar</button>
                 </div>
         </main>
 </div>
-	
 {% endblock content %}
