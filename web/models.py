@@ -13,6 +13,7 @@ class Tecnico(models.Model):
     class Meta:
         verbose_name = 'tecnico'
         verbose_name_plural = 'tecnicos'
+        ordering = ('tecnico_id')
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=150)
