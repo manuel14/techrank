@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Cliente, Tecnico
-from django.db import IntegrityError
 
 
 @login_required(login_url='/web/login/')
@@ -13,8 +12,18 @@ def index(request):
 
 @login_required(login_url='/web/login/')
 def seguimiento(request):
-    clientes = Cliente.objects.all()
-    return render(request, 'web/seguimiento.html', {'clientes': clientes})
+    clientes = Cliente.objects.exclude(estado="IN")
+    for c in clientes:
+        if c.compartido:
+            tec = Tecnico.objects.get(tecnico_id=c.compartido)
+            c.tec_compartido = tec.nombre
+    user_groups = request.user.groups.values_list('name', flat=True)
+    if len(user_groups) == 0:
+        grupo = []
+    else:
+        grupo = user_groups[0]
+    return render(request, 'web/seguimiento.html',
+                  {'clientes': clientes, 'grupo': grupo})
 
 
 @login_required(login_url='/web/login/')
@@ -32,12 +41,56 @@ def dato(request):
     direccion = request.POST.get("direccion", None)
     compartido = request.POST.get("compartido", None)
     id_tec = request.user.username
-    tec, created = Tecnico.objects.get_or_create(tecnico_id=id_tec, user=request.user)
+    tec, created = Tecnico.objects.get_or_create(
+        tecnico_id=id_tec, user=request.user)
     cliente = Cliente(
-        nombre=nombre, email=email, direccion= direccion,
+        nombre=nombre, email=email, direccion=direccion,
         telefono=telefono, tecnico=tec,
         nodo=nodo, compartido=compartido
-        )
+    )
     cliente.save()
     return redirect('/web/seguimiento')
 
+
+@login_required(login_url='/web/login/')
+def estados(request):
+    clientes_list = []
+    clientes_estados = list(request.POST.dict().items())
+    clientes_estados = clientes_estados[1:]
+    for v in clientes_estados:
+        if v[1].split("-")[1] == "no":
+            pass
+        else:
+            clientes_dic = {
+                "cliente": int(v[1].split("-")[0]), "estado": v[1].split("-")[1].upper()
+            }
+            clientes_list.append(clientes_dic)
+    for c in clientes_list:        
+        cli_obj = Cliente.objects.get(pk=c["cliente"])
+        cli_obj.estado = c["estado"]
+        cli_obj.save()
+        if c["estado"] == "IN":
+            tec_obj = Tecnico.objects.get(tecnico_id = cli_obj.tecnico.tecnico_id)
+            tec_obj.cant_ventas += 1
+            tec_obj.save()
+            if cli_obj.compartido:
+                tec_compartido = Tecnico.objects.get(tecnico_id = cli_obj.compartido)
+                tec_compartido.cant_ventas += 1
+                tec_compartido.save()
+
+    return redirect('/web/seguimiento')
+
+
+@login_required(login_url='/web/login/')
+def ranking(request):
+    tecs = Tecnico.objects.filter(cant_ventas__gt=0).order_by('-cant_ventas')
+    for t in tecs:
+        clientes = t.clientes.filter(estado="IN")
+        t.comision = 0
+        for c in clientes:
+            if c.compartido is not None:
+                t.comision += 75        
+            else:
+                t.comision += 150
+
+    return render(request, 'web/ranking.html', {'tecnicos': tecs})

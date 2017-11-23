@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^seguimiento$', views.seguimiento, name='seguimiento'),
     url(r'^logout_view$', views.logout_view, name='logout'),
     url(r'^dato$', views.dato, name='dato'),
+    url(r'^estados$', views.estados, name='estados'),
+    url(r'^ranking$', views.ranking, name='ranking'),
 ]

@@ -1,0 +1,36 @@
+{% extends "web/base.html"  %}
+{% load web_extras %}
+{% block activeRanking %}active{% endblock activeRanking %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 offset-4 mb-2">
+            <h1>Ranking de técnicos</h1>
+        </div>
+    </div>
+    <div class="row">
+      <div class="table-responsive">
+            <table id="ranking" class="table table-hover col-12">
+                <thead class="thead-light ">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th data-field="nombre">Nombre</th> 
+                      <th data-field="ventas">Cantidad de ventas</th>
+                      <th data-field="total">Total comisión</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tec in tecnicos %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{tec.nombre}}</td>
+                            <td>{{tec.cant_ventas}}</td>
+                            <td>{{"$"|addstr:tec.comision}}</td>
+                        </tr>   
+                    {% endfor %}
+                </tbody>
+            </table>  
+      </div>        
+    </div>
+</div>
+{% endblock content %}

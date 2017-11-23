@@ -1,59 +1,87 @@
 {% extends "web/base.html"  %}
+{% block activeSeguimiento %}active{% endblock activeSeguimiento %}
 {% block content %}
 <div class="container-fluid">
-	 <main class="mt-3">
-            <div class="row">
-                <div class="col col-sm-9">
-                    <h1>Potenciales clientes</h1>
-                </div>
+      <div class="row">
+          <div class="col col-sm-9 offset-4 mt-3 mb-3">
+              <h1>Potenciales clientes</h1>
+          </div>
+      </div>
+      <div class="row">
+        <form class="col-12" id="clientes" method="post" action="{% url 'estados' %}">
+        {% csrf_token %}
+            <div class="table-responsive">
+              <table id="tb_clientes" class="table table-hover">
+                  <thead class="thead-light ">
+                      <tr>
+                        <th data-field="nombre">Nombre</th> 
+                        <th data-field="direccion">Dirección</th>
+                        <th data-field="telefono">Teléfono</th>
+                        <th data-field="nodo">Nodo</th>
+                        <th data-field="correo">Correo</th>
+                        <th data-field="tecnico">Tecnico</th>
+                        <th data-field="compartido">Id de técnico compartido</th>
+                        <th data-field="estado">Estado</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for cliente in clientes %}
+                          <tr>
+                              <td>{{cliente.nombre}}</td>
+                              <td>{{cliente.direccion}}</td>
+                              <td>{{cliente.telefono}}</td>
+                              <td>{{cliente.nodo}}</td>
+                              <td>{{cliente.email}}</td>
+                              <td>{{cliente.tecnico.tecnico_id}}</td>
+                              <td>{{cliente.tec_compartido}}</td>
+                              <td>
+                                  <div class="form-check form-check-inline disabled">
+                                    <label class="form-check-label">
+                                      <input id="vendido-{{cliente.pk}}" name="vendido-{{cliente.pk}}" disabled class="form-check-input" type="radio" value="{{cliente.pk}}-no" {% if cliente.estado == "NO" or cliente.estado == ""  %} checked="checked"{% endif %}
+                                      > No contactado   
+                                    </label>
+                                  </div>
+                                  <div class="form-check form-check-inline disabled">
+                                    <label class="form-check-label">
+                                      <input id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input" type="radio" value="{{cliente.pk}}-ct" {% if cliente.estado == "CT" %}
+                                        checked="checked"
+                                      {% endif %}> Contactado
+                                    </label>
+                                  </div>
+                                  <div class="form-check form-check-inline disabled">
+                                    <label class="form-check-label">
+                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input" type="radio" value="{{cliente.pk}}-ve" {% if cliente.estado == "VE" %}checked="checked"
+                                      {% endif %} > Vendido
+                                    </label>
+                                  </div>
+                                  <div class="form-check form-check-inline disabled">
+                                    <label class="form-check-label">
+                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input" type="radio" value="{{cliente.pk}}-in" > Instalado
+                                    </label>
+                                  </div>
+                              </td>
+                          </tr>   
+                      {% endfor %}
+                  </tbody>
+              </table>
             </div>
-                <table class="table table-responsive table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                          <th data-field="nombre">Nombre</th> 
-                          <th data-field="direccion">Dirección</th>
-                          <th data-field="telefono">Teléfono</th>
-                          <th data-field="nodo">Nodo</th>
-                          <th data-field="correo">Correo</th>
-                          <th data-field="tecnico">Tecnico</th>
-                          <th data-field="compartido">Id de técnico compartido</th>
-                          <th data-field="estado">Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for cliente in clientes %}
-                            <tr>
-                                <td>{{cliente.nombre}}</td>
-                                <td>{{cliente.direccion}}</td>
-                                <td>{{cliente.telefono}}</td>
-                                <td>{{cliente.nodo}}</td>
-                                <td>{{cliente.email}}</td>
-                                <td>{{cliente.tecnico.tecnico_id}}</td>
-                                <td>{{cliente.compartido}}</td>
-                                <td>
-                                    <div class="form-check form-check-inline">
-                                      <label class="form-check-label">
-                                        <input disabled class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> No contactado
-                                      </label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <label class="form-check-label">
-                                        <input disabled class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> Contactado
-                                      </label>
-                                    </div>
-                                    <div class="form-check form-check-inline disabled">
-                                      <label class="form-check-label">
-                                        <input id="vendido" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled> Vendido
-                                      </label>
-                                    </div>
-                                </td>
-                            </tr>   
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <div style="display:None;" class="form-group col-md-6 col-sm-12 mx-auto">
-                    <button type="submit" class="btn btn-primary mx-auto">Guardar</button>
-                </div>
-        </main>
+        <div class="form-group col-md-6 col-sm-12 mx-auto">
+              <button style="display:None;" id="guardar" type="submit" class="btn btn-primary mx-auto">Guardar</button>
+        </div>
+      </form>
+    </div>
 </div>
 {% endblock content %}
+{% block extraScripts %}
+  <script>
+    $(document).ready(function() {
+      var grupo = '{{grupo}}';
+      console.log(grupo);
+      if (grupo == 'comercial'){
+          $(".form-check-input").prop("disabled", false);
+          $(".form-check .form-check-inline").prop("disabled", false);
+          $('#guardar').css('display', 'block');
+      };
+    });
+  </script>
+{% endblock extraScripts %}
