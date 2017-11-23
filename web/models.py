@@ -5,6 +5,7 @@ class Tecnico(models.Model):
     tecnico_id = models.CharField(max_length=10)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     cant_ventas = models.IntegerField(default=0)
+    nombre = models.CharField(max_length=100)
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=150)
@@ -17,10 +18,12 @@ class Cliente(models.Model):
     NO = "NO"
     CONTACTADO = "CT"
     VENTA = "VE"
+    IN = "IN"
     estado_choices = (
         (NO, 'No contactado'),
         (CONTACTADO, 'contactado'),
         (VENTA, 'venta confirmada'),
+        (IN, "instalado")
     )
     estado = models.CharField(max_length=20, choices = estado_choices, default=NO)
 
@@ -30,3 +33,4 @@ class Cliente(models.Model):
     class Meta:
         verbose_name = 'cliente'
         verbose_name_plural = 'clientes'
+        unique_together = ("nombre", "direccion")
