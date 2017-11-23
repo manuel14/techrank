@@ -20,7 +20,7 @@
                         <th data-field="nodo">Nodo</th>
                         <th data-field="correo">Correo</th>
                         <th data-field="tecnico">Tecnico</th>
-                        <th data-field="compartido">Id de técnico compartido</th>
+                        <th data-field="compartido">Compartido con</th>
                         <th data-field="estado">Estado</th>
                       </tr>
                   </thead>
@@ -32,7 +32,7 @@
                               <td>{{cliente.telefono}}</td>
                               <td>{{cliente.nodo}}</td>
                               <td>{{cliente.email}}</td>
-                              <td>{{cliente.tecnico.tecnico_id}}</td>
+                              <td>{{cliente.tecnico.nombre}}</td>
                               <td>{{cliente.tec_compartido}}</td>
                               <td>
                                   <div class="form-check form-check-inline disabled">
