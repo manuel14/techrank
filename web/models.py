@@ -7,7 +7,7 @@ class Tecnico(models.Model):
     cant_ventas = models.IntegerField(default=0)
     nombre = models.CharField(max_length=100)
 
-    def __str__(self)
+    def __str__(self):
         return self.tecnico_id
 
     class Meta:
