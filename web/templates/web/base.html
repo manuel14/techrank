@@ -24,6 +24,9 @@
 					<li class="nav-item {% block activeSeguimiento %}{% endblock activeSeguimiento %}">
 						<a class="nav-link" href="{% url 'seguimiento' %}">Seguimiento</a>
 					</li>
+					<li class="nav-item {% block activeRanking %}{% endblock activeRanking %}">
+						<a class="nav-link" href="{% url 'ranking' %}">Ranking</a>
+					</li>
 				<li class="nav-item d-sm-none">
 					<a class="nav-link" href="{% url 'logout' %}">Salir</a>
 				</li>
@@ -39,13 +42,10 @@
 		</ul>
 	{% endif %}
 	</header>
-	
 	{% block content %}{% endblock content %}
-
 	<script src='{% static "web/js/jquery-3.2.1.min.js" %}'></script>
 	<script src='{% static "web/js/popper.min.js" %}'></script>
 	<script src='{% static "web/js/bootstrap.min.js" %}'></script>
-
 	{% block extraScripts %}{% endblock extraScripts %}
 </body>
 </html>
