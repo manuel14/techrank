@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Cliente, Tecnico
-
+import json
 
 @login_required(login_url='/web/login/')
 def index(request):
@@ -12,16 +12,13 @@ def index(request):
 
 @login_required(login_url='/web/login/')
 def seguimiento(request):
-    clientes = Cliente.objects.exclude(estado="IN")
+    clientes = Cliente.objects.all()
     for c in clientes:
         if c.compartido:
             tec = Tecnico.objects.get(tecnico_id=c.compartido)
             c.tec_compartido = tec.nombre
-    user_groups = request.user.groups.values_list('name', flat=True)
-    if len(user_groups) == 0:
-        grupo = []
-    else:
-        grupo = user_groups[0]
+    user_groups = json.dumps(list(request.user.groups.values_list('name', flat=True)))
+    grupo = user_groups
     return render(request, 'web/seguimiento.html',
                   {'clientes': clientes, 'grupo': grupo})
 
@@ -83,14 +80,17 @@ def estados(request):
 
 @login_required(login_url='/web/login/')
 def ranking(request):
-    tecs = Tecnico.objects.filter(cant_ventas__gt=0).order_by('-cant_ventas')
+    tecs = Tecnico.objects.filter(
+        cant_ventas__gt=0, clientes__estado="IN").order_by('-cant_ventas').distinct()
     for t in tecs:
         clientes = t.clientes.filter(estado="IN")
         t.comision = 0
+        t.ventas = 0
         for c in clientes:
-            if c.compartido is not None:
-                t.comision += 75        
+            t.ventas +=1
+            if c.compartido is None or c.compartido == "":
+                t.comision += 150   
             else:
-                t.comision += 150
+                t.comision += 75
 
     return render(request, 'web/ranking.html', {'tecnicos': tecs})

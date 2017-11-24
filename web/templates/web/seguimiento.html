@@ -37,30 +37,37 @@
                               <td>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input id="vendido-{{cliente.pk}}" name="vendido-{{cliente.pk}}" disabled class="form-check-input" type="radio" value="{{cliente.pk}}-no" {% if cliente.estado == "NO" or cliente.estado == ""  %} checked="checked"{% endif %}
+                                      <input id="vendido-{{cliente.pk}}" name="vendido-{{cliente.pk}}" disabled class="form-check-input com" type="radio" value="{{cliente.pk}}-no" {% if cliente.estado == "NO" or cliente.estado == ""  %} checked="checked"{% endif %}
                                       > No contactado   
                                     </label>
                                   </div>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input" type="radio" value="{{cliente.pk}}-ct" {% if cliente.estado == "CT" %}
+                                      <input id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input com" type="radio" value="{{cliente.pk}}-ct" {% if cliente.estado == "CT" %}
                                         checked="checked"
                                       {% endif %}> Contactado
                                     </label>
                                   </div>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input" type="radio" value="{{cliente.pk}}-ve" {% if cliente.estado == "VE" %}checked="checked"
+                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input com" type="radio" value="{{cliente.pk}}-ve" {% if cliente.estado == "VE" %}checked="checked"
                                       {% endif %} > Vendido
                                     </label>
                                   </div>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input" type="radio" value="{{cliente.pk}}-in" > Instalado
+                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input com" type="radio" value="{{cliente.pk}}-in" {% if cliente.estado == "IN" %}checked="checked"
+                                      {% endif %} > Instalado
+                                    </label>
+                                  </div>
+                                  <div class="form-check form-check-inline disabled">
+                                    <label class="form-check-label">
+                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input adm" type="radio" value="{{cliente.pk}}-li" {% if cliente.estado == "LI" %}checked="checked"
+                                      {% endif %} > Liquidado
                                     </label>
                                   </div>
                               </td>
-                          </tr>   
+                          </tr>
                       {% endfor %}
                   </tbody>
               </table>
@@ -75,13 +82,19 @@
 {% block extraScripts %}
   <script>
     $(document).ready(function() {
-      var grupo = '{{grupo}}';
+      var grupo = JSON.parse("{{grupo|escapejs}}");
       console.log(grupo);
-      if (grupo == 'comercial'){
-          $(".form-check-input").prop("disabled", false);
-          $(".form-check .form-check-inline").prop("disabled", false);
+      $.each(grupo, function(key, value){
+        console.log(value);
+        if (value == 'comercial'){
+          $(".form-check-input.com").prop("disabled", false);
           $('#guardar').css('display', 'block');
-      };
+        };
+        if (value == 'administracion'){
+          $(".form-check-input.adm").prop("disabled", false);
+          $('#guardar').css('display', 'block');
+        };
+      })
     });
   </script>
 {% endblock extraScripts %}

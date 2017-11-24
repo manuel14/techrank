@@ -28,11 +28,13 @@ class Cliente(models.Model):
     CONTACTADO = "CT"
     VENTA = "VE"
     IN = "IN"
+    LI= "LI"
     estado_choices = (
         (NO, 'No contactado'),
         (CONTACTADO, 'contactado'),
         (VENTA, 'venta confirmada'),
-        (IN, "instalado")
+        (IN, "instalado"),
+        (LI, 'liquidado')
     )
     estado = models.CharField(max_length=20, choices = estado_choices, default=NO)
 
