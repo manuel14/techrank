@@ -33,7 +33,7 @@ from django.utils.log import DEFAULT_LOGGING
 DEFAULT_LOGGING['handlers']['mail_admins']['include_html'] = True
 
 RAVEN_CONFIG = {
-    'dsn': 'https://eea4c43354764e109e6c2ff31b33e84e:f86fa7745a8b40e6ab7fb6e73b8705f7@sentry.io/247269',
+    'dsn': 'https://6dad78e18ddb492fa6afbefc487d6c2a:3db1bd4e5c184e64b5b39b7872a6b32c@sentry.io/250261',
     'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
 }
 
@@ -165,63 +165,63 @@ else:
         }
     }
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'root': {
-#         'level': 'WARNING',
-#         'handlers': ['sentry'],
-#     },
-#     'formatters': {
-#         'verbose': {
-#             'format': '[%(asctime)s] %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
-#             'datefmt': '%d/%b/%Y %H:%M:%S'
-#         },
-#         'simple': {
-#             'format': '[%(asctime)s] %(levelname)s %(message)s',
-#             'datefmt': '%d/%b/%Y %H:%M:%S'
-#         },
-#     },
-#     'handlers': {
-#         'sentry': {
-#             'level': 'ERROR',
-#             'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-#             'tags': {'custom-tag': 'x'},
-#         },
-#         'console': {
-#             'level': 'INFO',
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'simple'
-#         },
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.handlers.TimedRotatingFileHandler',
-#             'formatter': 'verbose',
-#             'filename': 'tmp/log/techrank.log',
-#             'when': 'D',
-#             'backupCount': 30
-#         },
-#     },
-#     'loggers': {
-#         'web.views': {
-#             'handlers': ['console', 'file'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#         'django.db.backends': {
-#             'level': 'ERROR',
-#             'handlers': ['console'],
-#             'propagate': False,
-#         },
-#         'raven': {
-#             'level': 'DEBUG',
-#             'handlers': ['console'],
-#             'propagate': False,
-#         },
-#         'sentry.errors': {
-#             'level': 'DEBUG',
-#             'handlers': ['sentry'],
-#             'propagate': False,
-#         }
-#     }
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['sentry'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
+        },
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
+        },
+    },
+    'handlers': {
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+            'tags': {'custom-tag': 'x'},
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': 'tmp/log/techrank.log',
+            'when': 'D',
+            'backupCount': 30
+        },
+    },
+    'loggers': {
+        'web.views': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['sentry'],
+            'propagate': False,
+        }
+    }
+}
