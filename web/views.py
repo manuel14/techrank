@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Cliente, Tecnico
@@ -31,6 +31,7 @@ def logout_view(request):
 
 @login_required(login_url='/web/login/')
 def dato(request):
+
     nombre = request.POST.get("nombre", None)
     email = request.POST.get("email", None)
     telefono = request.POST.get("telefono", None)
@@ -94,3 +95,9 @@ def ranking(request):
                 t.comision += 75
 
     return render(request, 'web/ranking.html', {'tecnicos': tecs})
+
+def error404(request):
+    return render(request, 'web/404.html')
+
+def error500(request):
+    return render(request, 'web/500.html')
