@@ -143,27 +143,26 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGOUT_REDIRECT_URL = '/web/login/'
 
 LOGIN_REDIRECT_URL = '/web/'
+  
+ALLOWED_HOSTS = ['*']
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
-if DEBUG:   
-    ALLOWED_HOSTS = ['*']
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-else:
-    ALLOWED_HOSTS = ['localhost', '192.168.50.164']
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'techrank',
-            'USER': 'mzubieta',
-            'PASSWORD': 'pucheto22',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }
+    # ALLOWED_HOSTS = ['localhost', '192.168.50.164']
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #         'NAME': 'techrank',
+    #         'USER': 'mzubieta',
+    #         'PASSWORD': 'pucheto22',
+    #         'HOST': 'localhost',
+    #         'PORT': '',
+    #     }
+    # }
 
 LOGGING = {
     'version': 1,
