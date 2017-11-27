@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 class Tecnico(models.Model):
     tecnico_id = models.CharField(max_length=10)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    cant_ventas = models.IntegerField(default=0)
     nombre = models.CharField(max_length=100)
 
     def __str__(self):

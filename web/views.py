@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerEr
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Cliente, Tecnico
+from django.db.models import Count, Q
 import json
 
 @login_required(login_url='/web/login/')
@@ -67,14 +68,6 @@ def estados(request):
         cli_obj = Cliente.objects.get(pk=c["cliente"])
         cli_obj.estado = c["estado"]
         cli_obj.save()
-        if c["estado"] == "IN":
-            tec_obj = Tecnico.objects.get(tecnico_id = cli_obj.tecnico.tecnico_id)
-            tec_obj.cant_ventas += 1
-            tec_obj.save()
-            if cli_obj.compartido:
-                tec_compartido = Tecnico.objects.get(tecnico_id = cli_obj.compartido)
-                tec_compartido.cant_ventas += 1
-                tec_compartido.save()
 
     return redirect('/web/seguimiento')
 
@@ -82,9 +75,11 @@ def estados(request):
 @login_required(login_url='/web/login/')
 def ranking(request):
     tecs = Tecnico.objects.filter(
-        cant_ventas__gt=0, clientes__estado="IN").order_by('-cant_ventas').distinct()
+            clientes__estado__in=["IN", "LI"]).annotate(
+            instalados=Count('clientes__estado')).distinct().order_by('-instalados')
     for t in tecs:
-        clientes = t.clientes.filter(estado="IN")
+        clientes = Cliente.objects.filter(
+            ((Q(tecnico=t) | Q(compartido=t.tecnico_id)) & Q(estado__in=["IN", "LI"])))
         t.comision = 0
         t.ventas = 0
         for c in clientes:
