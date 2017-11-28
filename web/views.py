@@ -32,7 +32,6 @@ def logout_view(request):
 
 @login_required(login_url='/web/login/')
 def dato(request):
-
     nombre = request.POST.get("nombre", None)
     email = request.POST.get("email", None)
     telefono = request.POST.get("telefono", None)
@@ -55,8 +54,9 @@ def dato(request):
 def estados(request):
     clientes_list = []
     clientes_estados = list(request.POST.dict().items())
-    clientes_estados = clientes_estados[1:]
+    clientes_estados = [(x,y) for (x,y) in clientes_estados if x != "csrfmiddlewaretoken"]
     for v in clientes_estados:
+        print(v[1])
         if v[1].split("-")[1] == "no":
             pass
         else:
