@@ -6,6 +6,7 @@ from .models import Cliente, Tecnico
 from django.db.models import Count, Q
 from django.contrib.auth.models import User
 import json
+import pytz
 
 @login_required(login_url='/web/login/')
 def index(request):
@@ -15,6 +16,9 @@ def index(request):
 @login_required(login_url='/web/login/')
 def seguimiento(request):
     clientes = Cliente.objects.all()
+    for c in clientes:
+        tz = pytz.timezone('America/Argentina/Buenos_Aires')
+        c.fecha = c.fecha_ing.astimezone(tz)
     user_groups = json.dumps(list(request.user.groups.values_list('name', flat=True)))
     return render(request, 'web/seguimiento.html',
                   {'clientes': clientes, 'grupo': user_groups})

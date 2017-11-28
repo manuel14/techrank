@@ -21,6 +21,7 @@
                         <th data-field="correo">Correo</th>
                         <th data-field="tecnico">Tecnico</th>
                         <th data-field="compartido">Compartido con</th>
+                        <th data-field="fecha_ing">Fecha de Carga</th>
                         <th data-field="estado">Estado</th>
                       </tr>
                   </thead>
@@ -38,6 +39,7 @@
                               {% else %}
                                 <td></td>  
                               {% endif %}
+                              <td>{{cliente.fecha|date:'d/m/Y h:i:s'}}</td>
                               <td>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
