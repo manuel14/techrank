@@ -33,7 +33,11 @@
                               <td>{{cliente.nodo}}</td>
                               <td>{{cliente.email}}</td>
                               <td>{{cliente.tecnico.nombre}}</td>
-                              <td>{{cliente.tec_compartido}}</td>
+                              {% if cliente.tecnico_compartido %}
+                                <td>{{cliente.tecnico_compartido.nombre}}</td>
+                              {% else %}
+                                <td></td>  
+                              {% endif %}
                               <td>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">

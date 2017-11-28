@@ -21,7 +21,7 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=150)
     email = models.EmailField(max_length=150, blank=True, null=True)
     tecnico = models.ForeignKey(Tecnico, related_name="clientes")
-    compartido = models.CharField(blank=True, null=True, max_length=10)
+    tecnico_compartido = models.ForeignKey(Tecnico, blank=True, null=True, default=None, related_name="clientes_comp")
     observacion = models.CharField(blank=True, null=True, max_length=300)
     NO = "NO"
     CONTACTADO = "CT"
