@@ -60,18 +60,31 @@ def dato(request):
 def estados(request):
     clientes_list = []
     clientes_estados = list(request.POST.dict().items())
-    clientes_estados = [(x,y) for (x,y) in clientes_estados if x != "csrfmiddlewaretoken"]
+    print(clientes_estados)
+    clientes_estados = [(x,y) for (x,y) in clientes_estados if x != "csrfmiddlewaretoken" ]
     for v in clientes_estados:
-        if v[1].split("-")[1] == "no":
-            pass
-        else:
+        try:
+            if v[1].split("-")[1] == "no":
+                pass
+            else:
+                clientes_dic = {
+                    "cliente": int(v[1].split("-")[0]), 
+                    "estado": v[1].split("-")[1].upper(),
+                    "obs": None
+                }
+                clientes_list.append(clientes_dic)
+        except IndexError:
             clientes_dic = {
-                "cliente": int(v[1].split("-")[0]), "estado": v[1].split("-")[1].upper()
+                "cliente": v[0].split("-")[1], 
+                "obs": v[1].strip(), "estado": None
             }
             clientes_list.append(clientes_dic)
     for c in clientes_list:        
         cli_obj = Cliente.objects.get(pk=c["cliente"])
-        cli_obj.estado = c["estado"]
+        if c["estado"]:
+            cli_obj.estado = c["estado"]
+        if c["obs"]:
+            cli_obj.observacion = c["obs"]
         cli_obj.save()
 
     return redirect('/web/seguimiento')

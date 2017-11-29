@@ -22,6 +22,7 @@
                         <th data-field="tecnico">Tecnico</th>
                         <th data-field="compartido">Compartido con</th>
                         <th data-field="fecha_ing">Fecha de Carga</th>
+                        <th data-field="observacion">Observacion</th>
                         <th data-field="estado">Estado</th>
                       </tr>
                   </thead>
@@ -40,6 +41,12 @@
                                 <td></td>  
                               {% endif %}
                               <td>{{cliente.fecha|date:'d/m/Y h:i:s'}}</td>
+                              <td>
+                                <div class="form-group disabled">
+                                  <textarea style="resize:none;" disabled cols="80" maxlength="300" name="obs-{{cliente.pk}}" class="form-control com" id="obs-{{cliente.pk}}" rows="4">{{cliente.observacion}}
+                                  </textarea>
+                                </div>
+                              </td>
                               <td>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
@@ -95,6 +102,7 @@
         if (value == 'comercial'){
           $(".form-check-input.com").prop("disabled", false);
           $('#guardar').css('display', 'block');
+          $(".form-control.com").prop("disabled", false);
         };
         if (value == 'administracion'){
           $(".form-check-input.adm").prop("disabled", false);
