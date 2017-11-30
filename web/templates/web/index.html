@@ -1,8 +1,6 @@
 {% extends "web/base.html" %}
 {% load staticfiles %}
-
 {% block content %}
-
 <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
     <div class="form-group col-6 mx-auto">
@@ -18,7 +16,5 @@
   </div>
 </form>
 {% endblock content %}
-
-{% block extraScripts %}
-    
+{% block extraScripts %}   
 {% endblock extraScripts %}
