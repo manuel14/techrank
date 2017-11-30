@@ -25,7 +25,8 @@ class Cliente(models.Model):
     email = models.EmailField(max_length=150, blank=True, null=True)
     tecnico = models.ForeignKey(Tecnico, related_name="clientes")
     tecnico_compartido = models.ForeignKey(
-        Tecnico, blank=True, null=True, default=None, related_name="clientes_comp")
+        Tecnico, blank=True, null=True,
+        default=None, related_name="clientes_comp")
     observacion = models.CharField(blank=True, null=True, max_length=300)
     fecha_ing = models.DateTimeField(default=timezone.now())
     NO = "NO"
