@@ -9,7 +9,7 @@ class Tecnico(models.Model):
     nombre = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.tecnico_id
+        return self.tecnico_id + self.nombre
 
     class Meta:
         verbose_name = 'tecnico'
