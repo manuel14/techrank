@@ -1,5 +1,9 @@
 {% extends "web/base.html"  %}
+{% load staticfiles %}
 {% block activeSeguimiento %}active{% endblock activeSeguimiento %}
+{% block extraHead %}
+  <link rel="stylesheet" href='{% static "web/css/seguimiento.css" %}'>  
+{% endblock extraHead %}
 {% block content %}
 <div class="container-fluid">
       <div class="row">
@@ -8,7 +12,7 @@
           </div>
       </div>
       <div class="row">
-        <form class="col-12" id="clientes" method="post" action="{% url 'estados' %}">
+        <form id="seguimiento" class="col-12" id="clientes" method="post" action="{% url 'estados' %}">
         {% csrf_token %}
             <div class="table-responsive">
               <table id="tb_clientes" class="table table-hover">
@@ -22,7 +26,7 @@
                         <th data-field="tecnico">Tecnico</th>
                         <th data-field="compartido">Compartido con</th>
                         <th data-field="fecha_ing">Fecha de Carga</th>
-                        <th data-field="observacion">Observacion</th>
+                        <th data-field="observacion">Observación</th>
                         <th data-field="estado">Estado</th>
                       </tr>
                   </thead>
