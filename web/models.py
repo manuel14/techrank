@@ -23,10 +23,10 @@ class Cliente(models.Model):
     nodo = models.CharField(max_length=150, blank=True, null=True)
     telefono = models.CharField(max_length=150)
     email = models.EmailField(max_length=150, blank=True, null=True)
-    tecnico = models.ForeignKey(Tecnico, related_name="clientes")
+    tecnico = models.ForeignKey(Tecnico, related_name="clientes", on_delete=None)
     tecnico_compartido = models.ForeignKey(
         Tecnico, blank=True, null=True,
-        default=None, related_name="clientes_comp")
+        default=None, related_name="clientes_comp", on_delete=None)
     observacion = models.CharField(blank=True, null=True, max_length=300)
     fecha_ing = models.DateTimeField(default=timezone.now())
     NO = "NO"
