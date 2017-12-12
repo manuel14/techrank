@@ -2,10 +2,3 @@
 	padding:0;
 }
 
-@media(max-width: 769px){
-	body{
-		overflow-x: auto;
-	}
-}
-
-body{overflow-x: hidden;}

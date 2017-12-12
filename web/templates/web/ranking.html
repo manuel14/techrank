@@ -7,6 +7,7 @@
     <div class="row">
         <div class="col-12 offset-4 mb-2">
             <h1>Ranking de técnicos</h1>
+            <button style="display:none;" id="exportar" class="btn btn-primary offset-6">Exportar</button>
         </div>
     </div>
     <div class="row">
@@ -38,3 +39,19 @@
   {% endif %}
 </div>
 {% endblock content %}
+{% block extraScripts %}
+<script>
+    $(document).ready(function() {
+      var grupo = JSON.parse("{{grupo|escapejs}}");
+      var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
+      $.each(grupo, function(key, value){
+        if ((value == 'administracion')&&(!isMobile)){
+          $('#exportar').css('display', 'block');
+        };
+      })
+      $("#exportar").click(function(event){
+        window.location = '/web/excel_ranking/'
+      });
+  });
+  </script>
+{% endblock extraScripts %}
