@@ -28,7 +28,7 @@ class Cliente(models.Model):
         Tecnico, blank=True, null=True,
         default=None, related_name="clientes_comp", on_delete=None)
     observacion = models.CharField(blank=True, null=True, max_length=300)
-    fecha_ing = models.DateTimeField(default=timezone.now())
+    fecha_ing = models.DateTimeField(default=timezone.now)
     NO = "NO"
     CONTACTADO = "CT"
     VENTA = "VE"
