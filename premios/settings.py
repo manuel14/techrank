@@ -105,9 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/Argentina/Buenos_Aires'
@@ -143,8 +140,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGOUT_REDIRECT_URL = '/web/login/'
 
 LOGIN_REDIRECT_URL = '/web/'
-  
-ALLOWED_HOSTS = ['*']
+
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = ['tr.ushuaiavision.com.ar', 'localhost', '192.168.50.164']
+    
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
