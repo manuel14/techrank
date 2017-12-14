@@ -1,0 +1,90 @@
+{% extends 'web/base.html' %}
+{% load staticfiles %}
+{% block activeHistorial %}active{% endblock activeHistorial %}
+{% block content %}
+{% if clientes %}
+    <form> 
+    <div class="container">
+        <div class="row">
+            <div class="col-4 offset-4 mt-2 mb-2">
+                <h2>Historial de clientes</h2>
+            </div>
+            <div class="col-4 mt-2 mb-2">
+                <label class="mr-sm-2" for="estado">Seleccione estado</label>
+                <select class="form-group custom-select mb-2" id="estado">
+                    <option {% if selected == "todos" %} selected {% endif %} value"todos">Todos</option>
+                    <option {% if selected == "no" %} selected {% endif %} value="no">No contactado</option>
+                    <option {% if selected == "ct" %} selected {% endif %} value="ct">Contactado</option>
+                    <option {% if selected == "ve" %} selected {% endif %} value="ve">Vendido</option>
+                    <option {% if selected == "in" %} selected {% endif %} value="in">Instalado</option>
+                    <option {% if selected == "li" %} selected {% endif %} value="li">Liquidado</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      <div id="tb_clientes" class="table-responsive ml-2">
+            <table id="ranking" class="table table-hover col-12">
+                <thead class="thead-light ">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th data-field="nombre">Nombre</th> 
+                      <th data-field="clientenro">Número de cliente</th>
+                      <th data-field="direccion">Dirección</th>
+                      <th data-field="fecha de carga">Fecha de carga</th>
+                      <th data-field="fecha de liq">Fecha de liquidación</th>
+                      <th data-field="tecnico">Técnico</th>
+                      <th data-field="compartido">Compartido</th>
+                      <th data-field="estado">Estado</th>
+                      <th data-field="observacion">Observacion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in clientes %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{c.nombre}}</td>
+                            <td>{{c.clientenro}}</td>
+                            <td>{{c.direccion}}</td>
+                            <td>{{c.fecha_ing|date:'d/m/Y H:i:s'}}</td>
+                            <td>{{c.fecha_liq|date:'d/m/Y H:i:s'}}</td>
+                            <td>{{c.tecnico.nombre}}</td>
+                            <td>{{c.tecnico_compartido.nombre}}</td>
+                            <td>{{c.get_estado_display}}</td>
+                            <td>{{c.observacion}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+      </div>
+    </div>
+    </form>
+    {% else %}
+        <div class="row">
+            <h1 class="col-6 offset-4 mt-3">No hay clientes</h1>
+            <div class="col-2 mt-3">
+                <label class="mr-sm-2" for="estado">Seleccione estado</label>
+                <select class="form-group custom-select mb-2" id="estado">
+                    <option {% if selected == "todos" %} selected {% endif %} value"todos">Todos</option>
+                    <option {% if selected == "no" %} selected {% endif %} value="no">No contactado</option>
+                    <option {% if selected == "ct" %} selected {% endif %} value="ct">Contactado</option>
+                    <option {% if selected == "ve" %} selected {% endif %} value="ve">Vendido</option>
+                    <option {% if selected == "in" %} selected {% endif %} value="in">Instalado</option>
+                    <option {% if selected == "li" %} selected {% endif %} value="li">Liquidado</option>
+                </select>
+            </div>
+        </div>
+
+  {% endif %}
+{% endblock content %}
+{% block extraScripts %}
+<script>
+    $(document).ready(function(){
+        $("#estado").change(function(){
+            var selected = $(this).val();
+            window.location = '/web/historial/?estado=' + selected;
+        });
+    });
+</script>
+{% endblock extraScripts %}

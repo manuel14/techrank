@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load web_extras %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,6 +28,12 @@
 					<li class="nav-item {% block activeRanking %}{% endblock activeRanking %}">
 						<a class="nav-link" href="{% url 'ranking' %}">Ranking</a>
 					</li>
+					{% if request.user|has_group:"comercial" or request.user|has_group:"administracion" %}
+						<li class="nav-item {% block activeHistorial %}{% endblock activeHistorial %}">
+						<a class="nav-link" href="{% url 'historial' %}">Historial</a>
+						</li>
+					{% endif %}
+					
 				<li class="nav-item d-sm-none">
 					<a class="nav-link" href="{% url 'logout' %}">Salir</a>
 				</li>

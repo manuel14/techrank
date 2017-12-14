@@ -18,7 +18,8 @@
               <table id="tb_clientes" class="table table-hover">
                   <thead class="thead-light ">
                       <tr>
-                        <th data-field="nombre">Nombre</th> 
+                        <th data-field="nombre">Nombre</th>
+                        <th data-field="clientenro">Número de cliente</th>
                         <th data-field="direccion">Dirección</th>
                         <th data-field="telefono">Teléfono</th>
                         <th data-field="nodo">Nodo</th>
@@ -34,6 +35,11 @@
                       {% for cliente in clientes %}
                           <tr>
                               <td>{{cliente.nombre}}</td>
+                              <td>
+                                <div class="form-group">
+                                  <input class="form-control clientenro" disabled name="clientenro-{{cliente.pk}}" id="clientenro" value="{{cliente.clientenro}}" type="text">
+                                </div>
+                              </td>
                               <td>{{cliente.direccion}}</td>
                               <td>{{cliente.telefono}}</td>
                               <td>{{cliente.nodo}}</td>
@@ -57,32 +63,32 @@
                               <td>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input id="vendido-{{cliente.pk}}" name="vendido-{{cliente.pk}}" disabled class="form-check-input com" type="radio" value="{{cliente.pk}}-no" {% if cliente.estado == "NO" or cliente.estado == ""  %} checked="checked"{% endif %}
+                                      <input id="estado-{{cliente.pk}}" name="estado-{{cliente.pk}}" disabled class="form-check-input com" type="radio" value="no" {% if cliente.estado == "NO" or cliente.estado == ""  %} checked="checked"{% endif %}
                                       > No contactado   
                                     </label>
                                   </div>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input com" type="radio" value="{{cliente.pk}}-ct" {% if cliente.estado == "CT" %}
+                                      <input id="estado-{{cliente.pk}}" disabled name="estado-{{cliente.pk}}" class="form-check-input com" type="radio" value="ct" {% if cliente.estado == "CT" %}
                                         checked="checked"
                                       {% endif %}> Contactado
                                     </label>
                                   </div>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input com" type="radio" value="{{cliente.pk}}-ve" {% if cliente.estado == "VE" %}checked="checked"
+                                      <input  id="estado-{{cliente.pk}}" disabled name="estado-{{cliente.pk}}" class="form-check-input com" type="radio" value="ve" {% if cliente.estado == "VE" %}checked="checked"
                                       {% endif %} > Vendido
                                     </label>
                                   </div>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input com" type="radio" value="{{cliente.pk}}-in" {% if cliente.estado == "IN" %}checked="checked"
+                                      <input  id="estado-{{cliente.pk}}" disabled name="estado-{{cliente.pk}}" class="form-check-input com" type="radio" value="in" {% if cliente.estado == "IN" %}checked="checked"
                                       {% endif %} > Instalado
                                     </label>
                                   </div>
                                   <div class="form-check form-check-inline disabled">
                                     <label class="form-check-label">
-                                      <input  id="vendido-{{cliente.pk}}" disabled name="vendido-{{cliente.pk}}" class="form-check-input adm" type="radio" value="{{cliente.pk}}-li"> Liquidado
+                                      <input  id="estado-{{cliente.pk}}" disabled name="estado-{{cliente.pk}}" class="form-check-input adm" type="radio" value="li"> Liquidado
                                     </label>
                                   </div>
                               </td>
@@ -107,6 +113,9 @@
           $(".form-check-input.com").prop("disabled", false);
           $('#guardar').css('display', 'block');
           $(".form-control.com").prop("disabled", false);
+          $(".form-control.clientenro").each(function(key,value){  
+            $(this).prop("disabled", false)
+          });
         };
         if (value == 'administracion'){
           $(".form-check-input.adm").prop("disabled", false);

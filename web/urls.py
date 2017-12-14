@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^estados/$', views.estados, name='estados'),
     url(r'^ranking/$', views.ranking, name='ranking'),
     url(r'^excel_ranking/$', views.excel_ranking, name='excel_ranking'),
+    url(r'^historial/$', views.historial, name='historial'),
 
 ]

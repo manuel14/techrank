@@ -19,6 +19,7 @@ class Tecnico(models.Model):
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=150)
+    clientenro = models.CharField(max_length=100, blank=True, null=True)
     direccion = models.CharField(max_length=150)
     nodo = models.CharField(max_length=150, blank=True, null=True)
     telefono = models.CharField(max_length=150)
@@ -29,6 +30,7 @@ class Cliente(models.Model):
         default=None, related_name="clientes_comp", on_delete=None)
     observacion = models.CharField(blank=True, null=True, max_length=300)
     fecha_ing = models.DateTimeField(default=timezone.now)
+    fecha_liq = models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
     NO = "NO"
     CONTACTADO = "CT"
     VENTA = "VE"
