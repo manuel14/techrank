@@ -86,10 +86,11 @@ def estados(request):
                 "clientenro": None
             }
         else:
+            obs = v[1].strip()
             clientes_dic = {
                 "cliente": int(v[0].split("-")[1]),
                 "estado": None,
-                "obs": v[1],
+                "obs": obs,
                 "clientenro": None
             }
         clientes_list.append(clientes_dic)

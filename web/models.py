@@ -24,13 +24,15 @@ class Cliente(models.Model):
     nodo = models.CharField(max_length=150, blank=True, null=True)
     telefono = models.CharField(max_length=150)
     email = models.EmailField(max_length=150, blank=True, null=True)
-    tecnico = models.ForeignKey(Tecnico, related_name="clientes", on_delete=None)
+    tecnico = models.ForeignKey(
+        Tecnico, related_name="clientes", on_delete=None)
     tecnico_compartido = models.ForeignKey(
         Tecnico, blank=True, null=True,
         default=None, related_name="clientes_comp", on_delete=None)
-    observacion = models.CharField(blank=True, null=True, max_length=300)
+    observacion = models.CharField(max_length=300, blank=True, null=True)
     fecha_ing = models.DateTimeField(default=timezone.now)
-    fecha_liq = models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    fecha_liq = models.DateTimeField(
+        auto_now=False, auto_now_add=False, blank=True, null=True)
     NO = "NO"
     CONTACTADO = "CT"
     VENTA = "VE"

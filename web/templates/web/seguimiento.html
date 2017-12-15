@@ -53,9 +53,8 @@
                               <td>{{cliente.fecha|date:'d/m/Y H:i:s'}}</td>
                               <td>
                                 <div class="form-group disabled">
-                                  <textarea style="resize:none;" disabled cols="80" maxlength="300" name="obs-{{cliente.pk}}" class="form-control com" id="obs-{{cliente.pk}}" rows="4">{% if cliente.observacion %}
+                                  <textarea style="resize:none;" disabled cols=80 maxlength=300 name="obs-{{cliente.pk}}" class="form-control com" id="obs-{{cliente.pk}}" rows=4>{% if cliente.observacion %}
                                     {{cliente.observacion}}
-                                  {% else %}
                                   {% endif %} 
                                   </textarea>
                                 </div>
@@ -108,9 +107,12 @@
   <script>
     $(document).ready(function() {
       var grupo = JSON.parse("{{grupo|escapejs}}");
+      console.log(grupo);
       $.each(grupo, function(key, value){
         if (value == 'comercial'){
+          console.log($(".form-check-input.com").prop("disabled"));
           $(".form-check-input.com").prop("disabled", false);
+          console.log($(".form-check-input.com").prop("disabled"));
           $('#guardar').css('display', 'block');
           $(".form-control.com").prop("disabled", false);
           $(".form-control.clientenro").each(function(key,value){  
