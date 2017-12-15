@@ -16,7 +16,9 @@ import random
 
 @login_required(login_url='/web/login/')
 def index(request):
-    return render(request, 'web/main.html')
+    tecnicos = json.dumps(
+        list(Tecnico.objects.all().values_list("tecnico_id", flat=True)))
+    return render(request, 'web/main.html', {"tecnicos": tecnicos})
 
 
 @login_required(login_url='/web/login/')
