@@ -39,25 +39,35 @@
         </form>
     </main>
 </div>
-<div id="snackbar">Técnico compartido no válido. Ingrese el id de su compañero correctamente</div>
+<div id="snackbar"></div>
 {% endblock content %}
 {% block extraScripts %}
   <script>
     $(document).ready(function(){
-      function toast() {
+      function toast(msg) {
       // Get the snackbar DIV
-      var x = document.getElementById("snackbar");
-      // Add the "show" class to DIV
-      x.className = "show";
-      // After 3 seconds, remove the show class from DIV
-      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 6000);
+        var x = document.getElementById("snackbar");
+        $(x).empty();
+        x.append(msg);
+        // Add the "show" class to DIV
+        x.className = "show";
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 6000);
       }
       $("#guardar").click(function(event){
         event.preventDefault();
+        logged = "{{logged}}";
         tecnico = $("#compartido").val()
         tecnicos = JSON.parse("{{tecnicos|escapejs}}");
         if($.inArray(tecnico, tecnicos) == -1){
-          toast();          
+          msg = 'Técnico compartido no válido. Ingrese el id de su compañero correctamente';
+          toast(msg);
+          return false;     
+        }
+        if(tecnico == logged){
+          msg = 'Está ingresando su mismo id en el campo de compartido. Ingrese el de su compañero'; 
+          toast(msg)
+          return false;
         }
         else{
           $("#cliente_form").submit();
