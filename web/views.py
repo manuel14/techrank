@@ -9,6 +9,7 @@ from openpyxl.styles import Font, Border, Side
 from .helpers import *
 from datetime import datetime
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 import json
 import pytz
 import random
@@ -16,11 +17,14 @@ import random
 
 @login_required(login_url='/web/login/')
 def index(request):
-    logged = Tecnico.objects.get(user=request.user).tecnico_id
-    tecnicos = json.dumps(
-        list(Tecnico.objects.all().values_list("tecnico_id", flat=True)))
-    return render(request, 'web/main.html', {
-        "tecnicos": tecnicos, "logged": logged})
+    try:
+        logged = Tecnico.objects.get(user=request.user).tecnico_id
+        tecnicos = json.dumps(
+            list(Tecnico.objects.all().values_list("tecnico_id", flat=True)))
+        return render(request, 'web/main.html', {
+            "tecnicos": tecnicos, "logged": logged})
+    except ObjectDoesNotExist:
+        return redirect("/web/seguimiento/")
 
 
 @login_required(login_url='/web/login/')

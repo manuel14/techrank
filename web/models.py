@@ -25,10 +25,10 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=150)
     email = models.EmailField(max_length=150, blank=True, null=True)
     tecnico = models.ForeignKey(
-        Tecnico, related_name="clientes", on_delete=None)
+        Tecnico, related_name="clientes", on_delete=models.CASCADE)
     tecnico_compartido = models.ForeignKey(
         Tecnico, blank=True, null=True,
-        default=None, related_name="clientes_comp", on_delete=None)
+        default=None, related_name="clientes_comp", on_delete=models.SET_NULL)
     observacion = models.CharField(max_length=300, blank=True, null=True)
     fecha_ing = models.DateTimeField(default=timezone.now)
     fecha_liq = models.DateTimeField(
