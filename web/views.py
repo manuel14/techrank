@@ -10,6 +10,8 @@ from .helpers import *
 from datetime import datetime
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
+from django.shortcuts import get_object_or_404
 import json
 import pytz
 import random
@@ -17,12 +19,13 @@ import random
 
 @login_required(login_url='/web/login/')
 def index(request):
+    msg = request.GET.get("msg", None)
     try:
         logged = Tecnico.objects.get(user=request.user).tecnico_id
         tecnicos = json.dumps(
             list(Tecnico.objects.all().values_list("tecnico_id", flat=True)))
         return render(request, 'web/main.html', {
-            "tecnicos": tecnicos, "logged": logged})
+            "tecnicos": tecnicos, "logged": logged, "msg": json.dumps(msg)})
     except ObjectDoesNotExist:
         return redirect("/web/seguimiento/")
 
@@ -53,13 +56,12 @@ def dato(request):
     nodo = request.POST.get("nodo", None)
     direccion = request.POST.get("direccion", None)
     compartido = request.POST.get("compartido", None)
-    id_tec = request.user.username
-    tec, created = Tecnico.objects.get_or_create(
-        tecnico_id=id_tec, user=request.user)
+    tec = get_object_or_404(Tecnico,
+                            user=request.user)
     if compartido:
         user = User.objects.get(username=compartido)
-        tec_comp, created = Tecnico.objects.get_or_create(
-            tecnico_id=compartido, user=user)
+        tec_comp = get_object_or_404(Tecnico,
+                                     tecnico_id=compartido, user=user)
     else:
         tec_comp = None
     cliente = Cliente(
@@ -67,7 +69,11 @@ def dato(request):
         telefono=telefono, tecnico=tec,
         nodo=nodo, tecnico_compartido=tec_comp
     )
-    cliente.save()
+    try:
+        cliente.save()
+    except IntegrityError:
+        msg = "El cliente que intenta guardar ya ha sido cargado anteriormente."
+        return redirect('/web/index/?msg=%s' % msg)
     return redirect('/web/seguimiento')
 
 
@@ -125,7 +131,8 @@ def ranking(request):
     tecs = ranking_tecs()
     user_groups = json.dumps(
         list(request.user.groups.values_list('name', flat=True)))
-    return render(request, 'web/ranking.html', {'tecnicos': tecs, "grupo": user_groups})
+    return render(request, 'web/ranking.html',
+                  {'tecnicos': tecs, "grupo": user_groups})
 
 
 def excel_ranking(request):

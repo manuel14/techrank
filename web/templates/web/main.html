@@ -5,45 +5,49 @@
   <link rel="stylesheet" href='{% static "web/css/toast.css" %}'>  
 {% endblock extraHead %}
 {% block content %}
-<div class="container-fluid">
-    <main class="mt-3">
-        <form id="cliente_form" method="post" action="{% url 'dato' %}">
-            {% csrf_token %}
+  <div class="container-fluid">
+      <main class="mt-3">
+          <form id="cliente_form" method="post" action="{% url 'dato' %}">
+              {% csrf_token %}
+              <div class="form-group col-md-6 col-sm-12 mx-auto">
+              <label for="nombre">Nombre</label>
+              <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+            </div>
             <div class="form-group col-md-6 col-sm-12 mx-auto">
-            <label for="nombre">Nombre</label>
-            <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" required>
-          </div>
-          <div class="form-group col-md-6 col-sm-12 mx-auto">
-            <label for="direccion">Direccion</label>
-            <input name="direccion" type="text" class="form-control"  id="direccion" placeholder="Direccion" required>
-          </div>
-          <div class="form-group col-md-6 col-sm-12 mx-auto">
-            <label for="telefono">Teléfono</label>
-            <input name="telefono" type="text" class="form-control" id="telefono" placeholder="Teléfono" required>
-          </div>
-          <div class="form-group col-md-6 col-sm-12 mx-auto">
-            <label for="nodo">Nodo</label>
-            <input name="nodo" type="text" class="form-control" id="nodo" placeholder="Nodo">
-          </div>
-          <div class="form-group col-md-6 col-sm-12 mx-auto">
-            <label for="correo">Correo</label>
-            <input name="correo" type="email" class="form-control" id="email" placeholder="Correo">
-          </div>
-          <div class="form-group col-md-6 col-sm-12 mx-auto">
-            <label for="compartido">Ingrese el Id de su compañero de cuadrilla</label>
-            <input name="compartido" type="text" class="form-control" id="compartido" placeholder="Ingrese Técnico id  de su compañero">
-          </div>
-          <div class="form-group col-md-6 col-sm-12 mx-auto">
-            <button id="guardar" type="submit" class="btn btn-primary mx-auto">Guardar</button>
-          </div>
-        </form>
-    </main>
-</div>
+              <label for="direccion">Direccion</label>
+              <input name="direccion" type="text" class="form-control"  id="direccion" placeholder="Direccion" required>
+            </div>
+            <div class="form-group col-md-6 col-sm-12 mx-auto">
+              <label for="telefono">Teléfono</label>
+              <input name="telefono" type="text" class="form-control" id="telefono" placeholder="Teléfono" required>
+            </div>
+            <div class="form-group col-md-6 col-sm-12 mx-auto">
+              <label for="nodo">Nodo</label>
+              <input name="nodo" type="text" class="form-control" id="nodo" placeholder="Nodo">
+            </div>
+            <div class="form-group col-md-6 col-sm-12 mx-auto">
+              <label for="correo">Correo</label>
+              <input name="correo" type="email" class="form-control" id="email" placeholder="Correo">
+            </div>
+            <div class="form-group col-md-6 col-sm-12 mx-auto">
+              <label for="compartido">Ingrese el Id de su compañero de cuadrilla</label>
+              <input name="compartido" type="text" class="form-control" id="compartido" placeholder="Ingrese Técnico id  de su compañero">
+            </div>
+            <div class="form-group col-md-6 col-sm-12 mx-auto">
+              <button id="guardar" type="submit" class="btn btn-primary mx-auto">Guardar</button>
+            </div>
+          </form>
+      </main>
+  </div>
 <div id="snackbar"></div>
 {% endblock content %}
 {% block extraScripts %}
   <script>
     $(document).ready(function(){
+      msg = $.parseJSON('{{msg|escapejs}}');
+      if(msg){
+        toast(msg);
+      }
       function toast(msg) {
       // Get the snackbar DIV
         var x = document.getElementById("snackbar");
@@ -57,14 +61,14 @@
       $("#guardar").click(function(event){
         event.preventDefault();
         logged = "{{logged}}";
-        tecnico = $("#compartido").val()
+        tecnico_comp = $("#compartido").val();
         tecnicos = JSON.parse("{{tecnicos|escapejs}}");
-        if($.inArray(tecnico, tecnicos) == -1){
+        if(($.inArray(tecnico_comp, tecnicos) == -1) && (tecnico_comp)){
           msg = 'Técnico compartido no válido. Ingrese el id de su compañero correctamente';
           toast(msg);
           return false;     
         }
-        if(tecnico == logged){
+        if(tecnico_comp == logged){
           msg = 'Está ingresando su mismo id en el campo de compartido. Ingrese el de su compañero'; 
           toast(msg)
           return false;
