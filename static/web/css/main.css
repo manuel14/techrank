@@ -45,3 +45,11 @@
 .bd-navbar .dropdown-menu{
     font-size:.875rem
 }
+
+@media(max-width: 769px){
+    body{
+        overflow-x: auto;
+    }
+}
+
+body{overflow-x: hidden;}

@@ -12,10 +12,17 @@
 	{% block extraHead %}{% endblock extraHead %}
 </head>
 <body>
-	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">	
-		<a class="navbar-brand" href="{% url 'index' %}">
-			<img class="mr-2" style="width:15%;height:50%;" src="{% static 'web/img/logo.png' %}" alt="logo">
-			<h4>Comisiones por ventas</h4></a>
+	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+        <div class="row">
+            <div class="col-3">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img class="mr-2" style="width:100%;height:100%" src="{% static 'web/img/logo.png' %}" alt="logo">
+                </a>
+            </div>
+            <div class="col-3 offset-2">
+                <h1 style="font-size:32px;" class="navbar-brand">Miportal</h1>
+            </div>
+        </div>
 	{% if user.is_authenticated %}
 		<div class="navbar-nav-scroll">
 			<ul class="navbar-nav bd-navbar-nav flex-row">
