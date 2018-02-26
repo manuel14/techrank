@@ -1,13 +1,11 @@
 {% extends "web/base.html" %}
 {% load staticfiles %}
-
 {% block extraHead %}
 <link rel="stylesheet" href="{% static 'registration/css/registration.css' %}">
 {% endblock extraHead %}
-
 {% block content %}
 <div class="row">
-    <div class="content col-12 col-md-4 mt-5 mx-auto">
+    <div class="content col-10 col-6 col-md-6 mt-5 mx-auto">
         {% if form.errors %}
         <div class="alert alert-danger">
             <p><strong>Error.</strong> Su nombre de usuario o contrase&ntilde;a no son correctos. Por favor reintente.</p>
@@ -43,4 +41,4 @@
                 </form>
             </div>
         </div>
-        {% endblock %}
+{% endblock %}
