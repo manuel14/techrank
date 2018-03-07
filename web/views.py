@@ -32,7 +32,7 @@ def index(request):
 
 @login_required(login_url='/web/login/')
 def seguimiento(request):
-    clientes = Cliente.objects.exclude(estado="LI").order_by("fecha_ing")
+    clientes = Cliente.objects.exclude(estado="LI").order_by("-fecha_ing")
     for c in clientes:
         tz = pytz.timezone('America/Argentina/Buenos_Aires')
         c.fecha = c.fecha_ing.astimezone(tz)
