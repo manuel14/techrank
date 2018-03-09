@@ -160,6 +160,13 @@ else:
         }
     }
     ALLOWED_HOSTS = ['tr.ushuaiavision.com.ar', 'localhost', '192.168.50.164']
+    
+# Configuraciones de email
+EMAIL_HOST = 'smtp-relay.gmail.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'info@ushuaiavision.com.ar'
+DEFAULT_FROM_EMAIL = 'info@ushuaiavision.com.ar'
+SERVER_EMAIL = 'info@ushuaiavision.com.ar'
 
 LOGGING = {
     'version': 1,

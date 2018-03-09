@@ -12,6 +12,9 @@ from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
+from django.core.mail import send_mail
+from django.conf import settings
+from .mails import mails
 import json
 import pytz
 import random
@@ -71,6 +74,14 @@ def dato(request):
     )
     try:
         cliente.save()
+        msg = "Nombre: " + cliente.nombre + "\nTelefono: " + str(cliente.telefono)
+        send_mail(
+            'Nuevo dato en el sistema de comisiones',
+            msg,
+            settings.DEFAULT_FROM_EMAIL,
+            mails["comercial"],
+            fail_silently=False,
+            )
     except IntegrityError:
         msg = "El cliente que intenta guardar ya ha sido cargado anteriormente."
         return redirect('/web/index/?msg=%s' % msg)
