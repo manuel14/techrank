@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
+try:
+    from .local_settings import *
+except ImportError:
+    DEBUG = aTrue
 
 import os
 import raven
@@ -24,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(jp6ng5bu&!@y@08we+c0uyxqr7vz7b3n3io=r==z8^zsalb&9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ADMINS = [('Admin', 'manuel.zubieta@ushuaiavision.com.ar'),
           ('Admin', 'sistemas@ushuaiavision.com.ar')]
@@ -160,7 +164,7 @@ else:
         }
     }
     ALLOWED_HOSTS = ['tr.ushuaiavision.com.ar', 'localhost', '192.168.50.164']
-    
+
 # Configuraciones de email
 EMAIL_HOST = 'smtp-relay.gmail.com'
 EMAIL_PORT = 25
