@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 try:
     from .local_settings import *
 except ImportError:
-    DEBUG = aTrue
+    DEBUG = True
 
 import os
 import raven
@@ -30,7 +30,7 @@ SECRET_KEY = '(jp6ng5bu&!@y@08we+c0uyxqr7vz7b3n3io=r==z8^zsalb&9'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ADMINS = [('Admin', 'manuel.zubieta@ushuaiavision.com.ar'),
+ADMINS = [('Admin', 'mzubieta@ushuaiavision.com.ar'),
           ('Admin', 'sistemas@ushuaiavision.com.ar')]
 
 from django.utils.log import DEFAULT_LOGGING
