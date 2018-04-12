@@ -234,8 +234,8 @@ def historial(request):
 
 
 def error404(request):
-    return render(request, 'web/404.html')
+    return render(request, exception, 'web/404.html')
 
 
 def error500(request):
-    return render(request, 'web/500.html')
+    return render(request, exception, 'web/500.html')
