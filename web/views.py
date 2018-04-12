@@ -233,9 +233,9 @@ def historial(request):
                   {"clientes": clientes, "selected": filtro})
 
 
-def error404(request):
-    return render(request, exception, 'web/404.html')
+def error404(request, exception):
+    return render(request, 'web/404.html')
 
 
-def error500(request):
-    return render(request, exception, 'web/500.html')
+def error500(request, exception):
+    return render(request, 'web/500.html')
